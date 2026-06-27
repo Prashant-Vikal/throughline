@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Theme tokens (space-separated RGB channels; consumed by tailwind) ----- */
+/* LIGHT — identical to the original ledger palette, so light is unchanged. */
+:root {
+  color-scheme: light;
+  --c-paper: 244 243 239;
+  --c-panel: 251 251 249;
+  --c-ink: 27 34 48;
+  --c-ink-soft: 58 66 83;
+  --c-ink-faint: 107 114 128;
+  --c-line: 227 225 218;
+  --c-thread: 154 106 30;
+  --c-thread-soft: 201 163 91;
+  --c-thread-wash: 243 235 220;
+  --c-strong: 63 122 94;
+  --c-strong-wash: 231 240 235;
+  --c-mixed: 154 123 30;
+  --c-mixed-wash: 244 238 221;
+  --c-concern: 164 81 63;
+  --c-concern-wash: 243 229 225;
+}
+
+/* DARK — deliberately designed (not auto-inverted): a warm near-black paper,
+   a lifted panel, a hairline that reads, a more luminous brass, and signal
+   colors + dark tint washes re-chosen to stay distinct and legible. */
+.dark {
+  color-scheme: dark;
+  --c-paper: 26 24 20;
+  --c-panel: 34 31 26;
+  --c-ink: 236 232 224;
+  --c-ink-soft: 200 195 185; /* secondary — lifted for AA headroom */
+  --c-ink-faint: 176 170 156; /* muted floor — raised from 147/142/129 to clear AA */
+  --c-line: 52 48 42;
+  --c-thread: 217 169 78;
+  --c-thread-soft: 230 194 129;
+  --c-thread-wash: 44 38 22;
+  --c-strong: 111 183 147;
+  --c-strong-wash: 22 36 29;
+  --c-mixed: 212 180 92;
+  --c-mixed-wash: 42 36 16;
+  --c-concern: 224 131 103;
+  --c-concern-wash: 46 26 20;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background-color: rgb(var(--c-paper));
+  color: rgb(var(--c-ink));
+  font-family: theme('fontFamily.sans');
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numeric data reads as a verifiable record, so it is always set in mono. */
+.tabular { font-family: theme('fontFamily.mono'); font-variant-numeric: tabular-nums; }
+
+/* The signature: the throughline thread that connects stages in sequence. */
+.thread-line {
+  background-image: linear-gradient(rgb(var(--c-thread-soft)), rgb(var(--c-thread-soft)));
+  background-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid rgb(var(--c-thread));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
